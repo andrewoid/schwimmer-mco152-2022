@@ -11,9 +11,10 @@ public class QuadraticEquation {
     }
 
     public double[] getX() {
+        double sqrt = Math.sqrt(b * b - 4 * a * c);
         return new double[]{
-                (-b + Math.sqrt(b * b - 4 * a * c)) / 2 * a,
-                (-b - Math.sqrt(b * b - 4 * a * c)) / 2 * a
+                (-b + sqrt) / 2 * a,
+                (-b - sqrt) / 2 * a
         };
     }
 
