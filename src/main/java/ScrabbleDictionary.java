@@ -8,7 +8,7 @@ public class ScrabbleDictionary {
     private HashMap<String, String> words = new HashMap<>();
 
     public ScrabbleDictionary() {
-        File file = new File("dictionar.txt");
+        File file = new File("dictionary.txt");
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
