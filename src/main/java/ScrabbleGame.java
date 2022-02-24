@@ -1,14 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ScrabbleGame {
 
-    private List<String> playedWords = new ArrayList<>();
-    private List<Character> tiles = new ArrayList<>();
-    private ScrabbleDictionary dictionary = new ScrabbleDictionary();
+    List<String> playedWords = new ArrayList<>();
+    List<Character> tiles = new ArrayList<>();
+    private ScrabbleDictionary dictionary;
+    private LetterPool letterPool;
 
-    public ScrabbleGame() {
-        // give the player 7 random tiles.
+    public ScrabbleGame(
+            ScrabbleDictionary dictionary,
+            LetterPool letterPool
+    ) {
+        this.dictionary = dictionary;
+        this.letterPool = letterPool;
+        for (int i = 0; i < 7; i++) {
+            tiles.add(letterPool.getRandomLetter());
+        }
     }
 
     /**
@@ -18,7 +27,26 @@ public class ScrabbleGame {
      * @param word
      */
     public boolean playWord(String word) {
-        return false;
+        if (!dictionary.isWord(word)) {
+            return false;
+        }
+
+        char[] characters = word.toUpperCase(Locale.ROOT).toCharArray();
+        List<Character> temp = new ArrayList<>(tiles);
+        for (char character : characters) {
+            if (!temp.remove((Character) character)) {
+                return false;
+            }
+        }
+        tiles = temp;
+
+        playedWords.add(word);
+
+        for (int i = tiles.size(); i < 7; i++) {
+            tiles.add(letterPool.getRandomLetter());
+        }
+
+        return true;
     }
 
 }
