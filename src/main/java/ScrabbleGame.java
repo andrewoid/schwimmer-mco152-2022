@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * The Model
+ */
 public class ScrabbleGame {
 
     List<String> playedWords = new ArrayList<>();
@@ -18,6 +21,10 @@ public class ScrabbleGame {
         for (int i = 0; i < 7; i++) {
             tiles.add(letterPool.getRandomLetter());
         }
+    }
+
+    public List<Character> getTiles() {
+        return tiles;
     }
 
     /**
