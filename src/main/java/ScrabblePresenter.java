@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * The presenter acts upon the model and the view. It retrieves data from the model and formats it for display in the view.
  */
@@ -18,11 +20,12 @@ public class ScrabblePresenter {
             view.setScore(String.valueOf(score));
             view.setTiles(model.getTiles());
         } else {
-            // view.setErrorMessage(...)
+            view.setErrorMessage("Wrong word");
         }
     }
 
     public void fillTiles() {
-        view.setTiles(model.getTiles());
+        List<Character> tiles = model.getTiles();
+        view.setTiles(tiles);
     }
 }

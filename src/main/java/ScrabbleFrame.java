@@ -85,4 +85,7 @@ public class ScrabbleFrame extends JFrame {
         frame.setVisible(true);
     }
 
+    public void setErrorMessage(String errorMessage) {
+
+    }
 }
