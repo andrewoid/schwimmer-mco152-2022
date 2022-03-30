@@ -2,8 +2,9 @@
 name: Java/Gradle CI
 
 # https://docs.github.com/en/actions/guides/building-and-testing-java-with-gradle
+# https://github.com/Madrapps/jacoco-report#example-workflow
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   build:
@@ -21,5 +22,27 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build (and test) with Gradle
-        run: ./gradlew build
+
+      - name: Build (and test) with Gradle and Coverage
+        run: ./gradlew test
+
+      - name: Upload Report
+        uses: 'actions/upload-artifact@v2'
+        with:
+            name: report.xml
+            path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+
+      - name: Jacoco Report to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.1
+        with:
+          path: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          debug-mode: false
+          min-coverage-overall: 50
+          min-coverage-changed-files: 50
+
+      - name: Get the Coverage info
+        run: |
+          echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
+          echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
