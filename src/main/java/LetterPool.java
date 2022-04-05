@@ -4,7 +4,7 @@ public class LetterPool {
 
     private Random random = new Random();
 
-    public char getRandomLetter() {
+    public char GetRandomLetter() {
         return (char) ('A' + random.nextInt(26));
     }
 

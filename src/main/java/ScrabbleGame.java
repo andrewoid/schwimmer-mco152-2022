@@ -19,7 +19,7 @@ public class ScrabbleGame {
         this.dictionary = dictionary;
         this.letterPool = letterPool;
         for (int i = 0; i < 7; i++) {
-            tiles.add(letterPool.getRandomLetter());
+            tiles.add(letterPool.GetRandomLetter());
         }
     }
 
@@ -50,7 +50,7 @@ public class ScrabbleGame {
         playedWords.add(word);
 
         for (int i = tiles.size(); i < 7; i++) {
-            tiles.add(letterPool.getRandomLetter());
+            tiles.add(letterPool.GetRandomLetter());
         }
 
         return true;

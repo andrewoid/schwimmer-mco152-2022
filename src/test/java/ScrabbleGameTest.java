@@ -16,7 +16,7 @@ class ScrabbleGameTest {
                 .isWord("HELLO");
         Mockito.doReturn('A','H','E','L','L','O','G')
                 .when(letterPool)
-                .getRandomLetter();
+                .GetRandomLetter();
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
@@ -24,7 +24,7 @@ class ScrabbleGameTest {
         // then
         assertTrue(game.playWord("HELLO"));
         Mockito.verify(letterPool, Mockito.times(7+5))
-                .getRandomLetter();
+                .GetRandomLetter();
         assertTrue(game.playedWords.contains("HELLO"));
         assertEquals(1, game.playedWords.size());
         assertEquals(7, game.tiles.size());
@@ -38,7 +38,7 @@ class ScrabbleGameTest {
                 .isWord("LOGO");
         Mockito.doReturn('A','H','E','L','L','O','G')
                 .when(letterPool)
-                .getRandomLetter();
+                .GetRandomLetter();
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
@@ -47,7 +47,7 @@ class ScrabbleGameTest {
         assertFalse(game.playWord("LOGO"));
         assertTrue(game.playedWords.isEmpty());
         Mockito.verify(letterPool, Mockito.times(7))
-                .getRandomLetter();
+                .GetRandomLetter();
         assertEquals(7, game.tiles.size());
     }
 
@@ -56,7 +56,7 @@ class ScrabbleGameTest {
         // given
         Mockito.doReturn('A','H','E','L','L','O','G')
                 .when(letterPool)
-                .getRandomLetter();
+                .GetRandomLetter();
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
