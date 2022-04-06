@@ -1,5 +1,11 @@
 package weather;
 
+import com.google.gson.Gson;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import weather.json.CurrentWeather;
+import weather.json.OpenWeatherMapService;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,17 +21,18 @@ public class GetCurrentWeather {
      * @return the current temperature in Kelvin
      */
     public double getTemperature() throws IOException {
-        URL url = new URL("https://samples.openweathermap.org/data/2.5/weather?zip=10019,us&appid=b6907d289e10d714a6e88b30761fae22");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://samples.openweathermap.org")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        InputStream in = connection.getInputStream();
-        InputStreamReader inputStreamReader = new InputStreamReader(in);
-        BufferedReader reader = new BufferedReader(inputStreamReader);
-        String line = reader.readLine();
+        OpenWeatherMapService service = retrofit.create(OpenWeatherMapService.class);
 
-        System.out.println(line);
+        CurrentWeather currentWeather = service.getCurrentWeather("10019")
+                .execute()
+                .body();
 
-        return 0;
+        return currentWeather.getTemperature();
     }
 
 
