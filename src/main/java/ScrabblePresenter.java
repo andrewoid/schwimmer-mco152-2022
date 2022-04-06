@@ -19,8 +19,9 @@ public class ScrabblePresenter {
             score++;
             view.setScore(String.valueOf(score));
             view.setTiles(model.getTiles());
-        } else
+        } else {
             view.setErrorMessage("Wrong word");
+        }
     }
 
     public void fillTiles() {
