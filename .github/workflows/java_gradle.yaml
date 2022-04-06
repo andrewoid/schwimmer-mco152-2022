@@ -13,18 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
-        with:
-           java-version: '11'
-           distribution: 'adopt'
-           cache: gradle
+      - name: action-checkstyle
       - uses: dbelyaev/action-checkstyle@v0.6.0
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
           level: warning
           checkstyle_config: .github/workflows/modified_google_checks.xml
-          checkstyle_version: 10.1
 
   build:
 
