@@ -18,9 +18,8 @@ public class ScrabbleGame {
     ) {
         this.dictionary = dictionary;
         this.letterPool = letterPool;
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 7; i++)
             tiles.add(letterPool.getRandomLetter());
-        }
     }
 
     public List<Character> getTiles() {
