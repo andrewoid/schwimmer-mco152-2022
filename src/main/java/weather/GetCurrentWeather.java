@@ -1,26 +1,18 @@
 package weather;
 
-import com.google.gson.Gson;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import weather.json.CurrentWeather;
 import weather.json.OpenWeatherMapService;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class GetCurrentWeather {
 
     /**
-     *
      * @return the current temperature in Kelvin
      */
-    public double getTemperature() throws IOException {
+    public CurrentWeather getCurrentWeather(String zipcode) throws IOException {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://samples.openweathermap.org")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -28,11 +20,11 @@ public class GetCurrentWeather {
 
         OpenWeatherMapService service = retrofit.create(OpenWeatherMapService.class);
 
-        CurrentWeather currentWeather = service.getCurrentWeather("10019")
+        CurrentWeather currentWeather = service.getCurrentWeather(zipcode)
                 .execute()
                 .body();
 
-        return currentWeather.getTemperature();
+        return currentWeather;
     }
 
 
