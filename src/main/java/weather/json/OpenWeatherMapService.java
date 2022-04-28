@@ -8,6 +8,6 @@ public interface OpenWeatherMapService {
     String APPID = "c65f21012c4876d2dc360667ec9a4a1b";
 
     @GET("data/2.5/weather?appid=" + APPID + "&units=imperial")
-    Observable<CurrentWeather> getCurrentWeather(@Query("lat") double lat, @Query("lon") double lon);
+    Observable<CurrentWeather> getCurrentWeather(@Query("q") String zipcode);
 
 }

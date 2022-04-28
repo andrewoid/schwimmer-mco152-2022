@@ -26,8 +26,8 @@ public class GetCurrentWeather {
     /**
      * @return the current temperature in Kelvin
      */
-    public Observable<CurrentWeather> getCurrentWeather(double lat, double lon) {
-        Observable<CurrentWeather> observable = service.getCurrentWeather(lat, lon);
+    public Observable<CurrentWeather> getCurrentWeather(String zipcode) {
+        Observable<CurrentWeather> observable = service.getCurrentWeather(zipcode);
 
         return observable;
     }

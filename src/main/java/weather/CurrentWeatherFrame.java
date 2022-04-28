@@ -47,7 +47,7 @@ public class CurrentWeatherFrame extends JFrame {
     }
 
     public void onSubmitClicked(ActionEvent event) {
-        Observable<CurrentWeather> observable = getCurrentWeather.getCurrentWeather(40.730610, -73.935242);
+        Observable<CurrentWeather> observable = getCurrentWeather.getCurrentWeather(zipcodeField.getText());
 
         Disposable disposable = observable
                 // do this request in the background
