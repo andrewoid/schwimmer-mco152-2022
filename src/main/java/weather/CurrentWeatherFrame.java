@@ -1,19 +1,11 @@
 package weather;
 
-import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import weather.json.CurrentWeather;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 
 /**
  * A JTextField for the zipcode
@@ -22,9 +14,9 @@ import java.io.IOException;
  */
 public class CurrentWeatherFrame extends JFrame {
 
-    private JTextField zipcodeField;
-    private JLabel temperatureLabel;
-    private GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
+    private final JTextField zipcodeField;
+    private final JLabel temperatureLabel;
+    private final CurrentWeatherPresenter presenter;
 
     public CurrentWeatherFrame() {
 
@@ -44,32 +36,24 @@ public class CurrentWeatherFrame extends JFrame {
         add(zipcodeField);
         add(button);
         add(temperatureLabel);
+
+        presenter = new CurrentWeatherPresenter(this, new GetCurrentWeather());
     }
 
     public void onSubmitClicked(ActionEvent event) {
-        Observable<CurrentWeather> observable = getCurrentWeather.getCurrentWeather(zipcodeField.getText());
-
-        Disposable disposable = observable
-                // do this request in the background
-                .subscribeOn(Schedulers.io())
-                // run onNext in a new Thread
-                .observeOn(Schedulers.newThread())
-                .subscribe(this::onNext, this::onError);
+        presenter.loadWeatherFromZipcode(zipcodeField.getText());
     }
 
-    public void onNext(CurrentWeather currentWeather) {
-        double farenheight = currentWeather.getTemperature();
+    public void setTemperature(double farenheight) {
         temperatureLabel.setText(String.valueOf(farenheight));
     }
 
-    public void onError(Throwable throwable) {
-        throwable.printStackTrace();
+    public void showError() {
+
     }
 
     public static void main(String[] args) {
         CurrentWeatherFrame frame = new CurrentWeatherFrame();
         frame.setVisible(true);
     }
-
-
 }

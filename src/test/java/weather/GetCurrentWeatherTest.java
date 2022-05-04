@@ -10,14 +10,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class GetCurrentWeatherTest {
 
     @Test
-    void getCurrentWeather() throws IOException {
+    void getCurrentWeather() {
         // given
         GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
 
         // when
-        CurrentWeather currentWeather = getCurrentWeather.getCurrentWeather("10019");
+        CurrentWeather currentWeather = getCurrentWeather.getCurrentWeather("10019")
+                // only used blocking calls in tests
+                .blockingFirst();
 
         // then
+        // this test will fail if the temperature in farenheight goes below zero.
         assertTrue(currentWeather.getTemperature() > 0);
         assertTrue(currentWeather.getMaxTemperature() > 0);
         assertTrue(currentWeather.getMinTemperature() > 0);
