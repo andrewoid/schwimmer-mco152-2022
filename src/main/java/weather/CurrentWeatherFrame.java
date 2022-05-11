@@ -16,6 +16,7 @@ public class CurrentWeatherFrame extends JFrame {
 
     private final JTextField zipcodeField;
     private final JLabel temperatureLabel;
+    private final TemperatureSign temperatureSign;
     private final CurrentWeatherPresenter presenter;
 
     public CurrentWeatherFrame() {
@@ -33,9 +34,12 @@ public class CurrentWeatherFrame extends JFrame {
 
         temperatureLabel = new JLabel("temp");
 
+        temperatureSign = new TemperatureSign();
+
         add(zipcodeField);
         add(button);
-        add(temperatureLabel);
+        //add(temperatureLabel);
+        add(temperatureSign);
 
         presenter = new CurrentWeatherPresenter(this, new GetCurrentWeather());
     }
@@ -46,6 +50,7 @@ public class CurrentWeatherFrame extends JFrame {
 
     public void setTemperature(double farenheight) {
         temperatureLabel.setText(String.valueOf(farenheight));
+        temperatureSign.setTemperature(farenheight);
     }
 
     public void showError() {
