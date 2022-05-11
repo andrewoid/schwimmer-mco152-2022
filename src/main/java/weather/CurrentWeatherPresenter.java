@@ -1,0 +1,50 @@
+package weather;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import weather.json.CurrentWeather;
+
+public class CurrentWeatherPresenter {
+
+    private final CurrentWeatherFrame view;
+    private final GetCurrentWeather model;
+    private Disposable disposable;
+
+    public CurrentWeatherPresenter(
+            CurrentWeatherFrame view,
+            GetCurrentWeather model
+    ) {
+        this.view = view;
+        this.model = model;
+    }
+
+    public void loadWeatherFromZipcode(String zipcode) {
+        Observable<CurrentWeather> observable = model.getCurrentWeather(zipcode);
+
+        // disposable is used to cancel the request.
+        disposable = observable
+                // do this request in the background
+                .subscribeOn(Schedulers.io())
+                // run onNext in a new Thread
+                .observeOn(Schedulers.newThread())
+                .subscribe(this::onNext, this::onError);
+    }
+
+    public void cancel() {
+        if (disposable != null) {
+            disposable.dispose();
+        }
+    }
+
+    private void onNext(CurrentWeather currentWeather) {
+        double farenheight = currentWeather.getTemperature();
+        view.setTemperature(farenheight);
+    }
+
+    private void onError(Throwable throwable) {
+        throwable.printStackTrace();
+        view.showError();
+    }
+
+}
