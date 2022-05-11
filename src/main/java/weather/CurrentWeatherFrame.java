@@ -1,5 +1,7 @@
 package weather;
 
+import weather.json.OpenWeatherMapServiceFactory;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +39,8 @@ public class CurrentWeatherFrame extends JFrame {
         add(button);
         add(temperatureLabel);
 
-        presenter = new CurrentWeatherPresenter(this, new GetCurrentWeather());
+        OpenWeatherMapServiceFactory factory = new OpenWeatherMapServiceFactory();
+        presenter = new CurrentWeatherPresenter(this, factory.getInstance());
     }
 
     public void onSubmitClicked(ActionEvent event) {
