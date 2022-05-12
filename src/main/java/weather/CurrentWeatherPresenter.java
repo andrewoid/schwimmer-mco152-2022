@@ -8,7 +8,7 @@ import weather.json.OpenWeatherMapService;
 public class CurrentWeatherPresenter {
 
     private final CurrentWeatherFrame view;
-    private final OpenWeatherMapService model;
+    private final OpenWeatherMapService Model;
     private Disposable disposable;
 
     public CurrentWeatherPresenter(
@@ -16,12 +16,12 @@ public class CurrentWeatherPresenter {
             OpenWeatherMapService model
     ) {
         this.view = view;
-        this.model = model;
+        this.Model = model;
     }
 
     public void loadWeatherFromZipcode(String zipcode) {
         // disposable is used to cancel the request.
-        disposable = model.getCurrentWeather(zipcode)
+        disposable = Model.getCurrentWeather(zipcode)
                 // do this request in the background
                 .subscribeOn(Schedulers.io())
                 // run onNext in a new Thread
