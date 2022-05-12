@@ -5,9 +5,8 @@ import weather.json.CurrentWeather;
 import weather.json.OpenWeatherMapService;
 import weather.json.OpenWeatherMapServiceFactory;
 
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OpenWeatherMapServiceTest {
 
@@ -20,7 +19,7 @@ class OpenWeatherMapServiceTest {
         // when
         CurrentWeather currentWeather = service.getCurrentWeather("10019")
                 // only used blocking calls in tests
-                .blockingFirst();
+                .blockingGet();
 
         // then
         // this test will fail if the temperature in farenheight goes below zero.

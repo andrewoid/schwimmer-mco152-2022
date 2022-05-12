@@ -1,6 +1,5 @@
 package weather;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import weather.json.CurrentWeather;
@@ -21,10 +20,8 @@ public class CurrentWeatherPresenter {
     }
 
     public void loadWeatherFromZipcode(String zipcode) {
-        Observable<CurrentWeather> observable = model.getCurrentWeather(zipcode);
-
         // disposable is used to cancel the request.
-        disposable = observable
+        disposable = model.getCurrentWeather(zipcode)
                 // do this request in the background
                 .subscribeOn(Schedulers.io())
                 // run onNext in a new Thread
