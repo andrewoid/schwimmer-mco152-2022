@@ -1,29 +1,27 @@
 package weather;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import weather.json.CurrentWeather;
+import weather.json.OpenWeatherMapService;
 
 public class CurrentWeatherPresenter {
 
     private final CurrentWeatherFrame view;
-    private final GetCurrentWeather model;
+    private final OpenWeatherMapService model;
     private Disposable disposable;
 
     public CurrentWeatherPresenter(
             CurrentWeatherFrame view,
-            GetCurrentWeather model
+            OpenWeatherMapService model
     ) {
         this.view = view;
         this.model = model;
     }
 
     public void loadWeatherFromZipcode(String zipcode) {
-        Observable<CurrentWeather> observable = model.getCurrentWeather(zipcode);
-
         // disposable is used to cancel the request.
-        disposable = observable
+        disposable = model.getCurrentWeather(zipcode)
                 // do this request in the background
                 .subscribeOn(Schedulers.io())
                 // run onNext in a new Thread

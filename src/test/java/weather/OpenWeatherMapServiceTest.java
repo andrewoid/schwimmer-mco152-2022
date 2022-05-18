@@ -2,22 +2,24 @@ package weather;
 
 import org.junit.jupiter.api.Test;
 import weather.json.CurrentWeather;
+import weather.json.OpenWeatherMapService;
+import weather.json.OpenWeatherMapServiceFactory;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class GetCurrentWeatherTest {
+class OpenWeatherMapServiceTest {
 
     @Test
     void getCurrentWeather() {
         // given
-        GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
+        OpenWeatherMapServiceFactory factory = new OpenWeatherMapServiceFactory();
+        OpenWeatherMapService service = factory.getInstance();
 
         // when
-        CurrentWeather currentWeather = getCurrentWeather.getCurrentWeather("10019")
+        CurrentWeather currentWeather = service.getCurrentWeather("10019")
                 // only used blocking calls in tests
-                .blockingFirst();
+                .blockingGet();
 
         // then
         // this test will fail if the temperature in farenheight goes below zero.
