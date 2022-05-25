@@ -1,7 +1,12 @@
 package weather;
 
+import weather.dagger.CurrentWeatherComponent;
+import weather.dagger.DaggerCurrentWeatherComponent;
+import weather.json.OpenWeatherMapService;
 import weather.json.OpenWeatherMapServiceFactory;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,13 +19,16 @@ import java.awt.event.ActionEvent;
  * A JButton to Submit
  * A JLabel for temperature in F
  */
+@Singleton
 public class CurrentWeatherFrame extends JFrame {
 
     private final JTextField zipcodeField;
     private final JLabel temperatureLabel;
     private final CurrentWeatherPresenter presenter;
 
-    public CurrentWeatherFrame() {
+    @Inject
+    public CurrentWeatherFrame(CurrentWeatherPresenter presenter) {
+        this.presenter = presenter;
 
         setTitle("Current Weather");
         setSize(300, 100);
@@ -38,9 +46,6 @@ public class CurrentWeatherFrame extends JFrame {
         add(zipcodeField);
         add(button);
         add(temperatureLabel);
-
-        OpenWeatherMapServiceFactory factory = new OpenWeatherMapServiceFactory();
-        presenter = new CurrentWeatherPresenter(this, factory.getInstance());
     }
 
     public void onSubmitClicked(ActionEvent event) {
@@ -56,7 +61,9 @@ public class CurrentWeatherFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        CurrentWeatherFrame frame = new CurrentWeatherFrame();
+        CurrentWeatherFrame frame = DaggerCurrentWeatherComponent.create()
+                .getCurrentWeatherFrame();
+
         frame.setVisible(true);
     }
 }
