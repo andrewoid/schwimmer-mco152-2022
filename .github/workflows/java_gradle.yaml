@@ -37,7 +37,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build (and test) with Gradle and Coverage
-        run: ./gradlew -Djava.awt.headless=true test
+        run: ./gradlew test
 
       - name: Upload Report
         uses: 'actions/upload-artifact@v2'
