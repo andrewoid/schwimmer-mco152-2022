@@ -1,13 +1,15 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ProjectileTest {
+class ProjectileTest {;
 
     @Test
     public void getX() {
         // given
-        Projectile p = new Projectile(52, 17);
+        var p = new Projectile(52, 17);
 
         // when
         double x = p.getX(3);
